@@ -1,0 +1,213 @@
+.manage-schedule-page {
+  min-height: 100vh;
+  padding: 30px;
+  background:
+    radial-gradient(circle at 80% 0%, rgba(32, 77, 141, 0.14), transparent 28%),
+    #0b1220;
+  color: #dce5f0;
+  font-family: "Trebuchet MS", "Segoe UI", sans-serif;
+}
+
+.manage-schedule-back {
+  display: inline-block;
+  margin-bottom: 18px;
+  color: #a9c9ff;
+  font-size: 14px;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.manage-schedule-header {
+  margin-bottom: 25px;
+}
+
+.manage-schedule-header p {
+  margin: 0 0 8px;
+  color: #a9c9ff;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1.2px;
+}
+
+.manage-schedule-header h1 {
+  margin: 0 0 8px;
+}
+
+.manage-schedule-header span,
+.manage-schedule-lessons-heading p,
+.manage-schedule-empty {
+  color: #91a4bf;
+}
+
+.manage-schedule-card {
+  padding: 24px;
+  border: 1px solid #26364f;
+  border-radius: 14px;
+  background: rgba(21, 31, 49, 0.94);
+}
+
+.schedule-selection {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(150px, 1fr));
+  gap: 15px;
+  max-width: 800px;
+  margin-bottom: 30px;
+}
+
+.schedule-selection label,
+.manage-schedule-lesson label {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  color: #b9c9df;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.manage-schedule-page input,
+.manage-schedule-page select {
+  min-width: 0;
+  height: 42px;
+  padding: 0 12px;
+  border: 1px solid #30415b;
+  border-radius: 7px;
+  background: #111c2e;
+  color: #dce5f0;
+  font: inherit;
+}
+
+.manage-schedule-page input:focus,
+.manage-schedule-page select:focus {
+  outline: 2px solid rgba(139, 184, 255, 0.45);
+  border-color: #5b8fe0;
+}
+
+.manage-schedule-lessons-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.manage-schedule-lessons-heading h2 {
+  margin: 0 0 6px;
+  font-size: 19px;
+}
+
+.manage-schedule-lessons-heading p {
+  margin: 0;
+  font-size: 13px;
+}
+
+.manage-schedule-lessons {
+  display: grid;
+  gap: 12px;
+}
+
+.manage-schedule-lesson {
+  display: grid;
+  grid-template-columns: minmax(150px, 0.8fr) minmax(180px, 1.5fr) minmax(160px, 1fr) minmax(120px, 0.8fr);
+  align-items: end;
+  gap: 12px;
+  padding: 14px;
+  border: 1px solid #26364f;
+  border-radius: 10px;
+  background: #111c2e;
+}
+
+.schedule-fixed-time {
+  display: flex;
+  min-height: 42px;
+  flex-direction: column;
+  justify-content: center;
+  gap: 4px;
+}
+
+.schedule-fixed-time span {
+  color: #91a4bf;
+  font-size: 11px;
+}
+
+.schedule-fixed-time strong {
+  color: #c2d8ff;
+  font-size: 14px;
+}
+
+.schedule-break {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  margin: 8px 0 12px;
+  padding: 12px 15px;
+  border: 1px dashed #345b91;
+  border-radius: 9px;
+  background: #111c2e;
+  color: #c2d8ff;
+  font-size: 13px;
+}
+
+.schedule-break span {
+  color: #91a4bf;
+}
+
+.schedule-save-button {
+  min-height: 38px;
+  padding: 8px 13px;
+  border-radius: 7px;
+  font: inherit;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.schedule-save-button {
+  border: 1px solid #24467b;
+  background: #24467b;
+  color: #fff;
+}
+
+.schedule-save-button:hover {
+  filter: brightness(1.15);
+}
+
+.manage-schedule-message {
+  margin: 18px 0 0;
+  color: #a9c9ff;
+}
+
+.manage-schedule-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 22px;
+}
+
+@media (max-width: 900px) {
+  .manage-schedule-lesson {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 600px) {
+  .manage-schedule-page {
+    padding: 18px;
+  }
+
+  .manage-schedule-card {
+    padding: 18px;
+  }
+
+  .schedule-selection,
+  .manage-schedule-lesson {
+    grid-template-columns: 1fr;
+  }
+
+  .manage-schedule-lessons-heading {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .schedule-break {
+    flex-direction: column;
+  }
+}

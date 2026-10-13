@@ -1,0 +1,307 @@
+.schedule-page {
+  margin-left: 250px;
+  padding: 42px 44px;
+  max-width: 1500px;
+}
+
+.schedule-page .page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+.schedule-page .page-header p {
+  color: #91a4bf;
+  font-size: 13px;
+  margin-bottom: 5px;
+}
+
+.schedule-page .page-header h1 {
+  font-size: 30px;
+  color: #dce5f0;
+}
+
+.grade-badge {
+  padding: 10px 15px;
+  border-radius: 9px;
+  background: #18345f;
+  color: #779bd3;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+
+/* DAY SELECTOR */
+
+.day-selector {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 12px;
+  margin-bottom: 25px;
+}
+
+.day-button {
+  border: 1px solid #26364f;
+  background: #151f31;
+  border-radius: 12px;
+  padding: 15px;
+  cursor: pointer;
+  color: #a7b7cc;
+  font-size: 13px;
+  font-weight: 600;
+  transition: 0.2s;
+}
+
+.day-button span {
+  display: block;
+  font-size: 10px;
+  margin-bottom: 5px;
+  color: #91a4bf;
+}
+
+.day-button:hover {
+  border-color: #3c6fcb;
+}
+
+.day-button.active {
+  background: linear-gradient(100deg, #356dcc, #195d9f);
+  color: white;
+  border-color: #356dcc;
+}
+
+.day-button.active span {
+  color: #d6e5ff;
+}
+
+
+/* SCHEDULE CARD */
+
+.schedule-card {
+  background: rgba(21, 31, 49, 0.94);
+  border: 1px solid #26364f;
+  border-radius: 16px;
+  padding: 25px;
+  margin-bottom: 25px;
+}
+
+.schedule-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #26364f;
+}
+
+.schedule-heading h2 {
+  font-size: 20px;
+  color: #dce5f0;
+}
+
+.schedule-heading p {
+  color: #91a4bf;
+  font-size: 12px;
+  margin-top: 5px;
+}
+
+.lesson-count {
+  background: #1b2940;
+  color: #b9c9df;
+  padding: 8px 12px;
+  border-radius: 8px;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+
+/* LESSON */
+
+.lesson {
+  display: grid;
+  grid-template-columns: 120px 30px 1fr;
+  min-height: 100px;
+}
+
+.lesson-time {
+  padding-top: 27px;
+  text-align: right;
+  padding-right: 20px;
+}
+
+.lesson-time strong {
+  font-size: 12px;
+  color: #91a4bf;
+}
+
+.lesson-line {
+  position: relative;
+  display: flex;
+  justify-content: center;
+}
+
+.lesson-line::before {
+  content: "";
+  width: 2px;
+  height: 100%;
+  background: #30415b;
+  position: absolute;
+}
+
+.lesson-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #174ea6;
+  position: relative;
+  z-index: 2;
+  margin-top: 29px;
+  border: 3px solid #18345f;
+  box-sizing: content-box;
+}
+
+.lesson-content {
+  margin: 15px 0 15px 20px;
+  padding: 15px;
+  border: 1px solid #2d4160;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  transition: 0.2s;
+}
+
+.lesson-content:hover {
+  border-color: #3c6fcb;
+  transform: translateX(3px);
+}
+
+.lesson-icon {
+  width: 42px;
+  height: 42px;
+  border-radius: 11px;
+  background: #18345f;
+  color: #779bd3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+}
+
+.lesson-content h3 {
+  font-size: 14px;
+  color: #dce5f0;
+  margin-bottom: 5px;
+}
+
+.lesson-content p {
+  color: #91a4bf;
+  font-size: 12px;
+  margin-bottom: 5px;
+}
+
+.lesson-content span {
+  color: #91a4bf;
+  font-size: 11px;
+}
+
+
+/* INFO */
+
+.schedule-info {
+  background: rgba(21, 31, 49, 0.94);
+  border: 1px solid #26364f;
+  border-radius: 16px;
+  padding: 20px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+}
+
+.schedule-info div {
+  padding: 5px 20px;
+  border-right: 1px solid #26364f;
+}
+
+.schedule-info div:last-child {
+  border-right: none;
+}
+
+.schedule-info span,
+.schedule-info strong {
+  display: block;
+}
+
+.schedule-info span {
+  color: #91a4bf;
+  font-size: 11px;
+  margin-bottom: 6px;
+}
+
+.schedule-info strong {
+  color: #dce5f0;
+  font-size: 14px;
+}
+
+
+/* MOBILE */
+
+@media (max-width: 900px) {
+
+  .schedule-page {
+    margin-left: 210px;
+    padding: 20px;
+  }
+
+  .day-selector {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .schedule-info {
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+  }
+
+}
+
+@media (max-width: 600px) {
+
+  .schedule-page {
+    margin-left: 0;
+    padding: 15px;
+  }
+
+  .schedule-page .page-header {
+    display: block;
+  }
+
+  .grade-badge {
+    display: inline-block;
+    margin-top: 15px;
+  }
+
+  .day-selector {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .lesson {
+    grid-template-columns: 85px 20px 1fr;
+  }
+
+  .lesson-time {
+    padding-right: 10px;
+  }
+
+  .lesson-content {
+    margin-left: 10px;
+  }
+
+  .schedule-info {
+    grid-template-columns: 1fr;
+  }
+
+  .schedule-info div {
+    border-right: none;
+    border-bottom: 1px solid #26364f;
+    padding: 12px 0;
+  }
+
+}

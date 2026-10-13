@@ -1,0 +1,243 @@
+.manage-announcements-page {
+  min-height: 100vh;
+  padding: 30px;
+  background:
+    radial-gradient(circle at 80% 0%, rgba(32, 77, 141, 0.14), transparent 28%),
+    #0b1220;
+  color: #dce5f0;
+  font-family: "Trebuchet MS", "Segoe UI", sans-serif;
+}
+
+.manage-announcements-back {
+  display: inline-block;
+  margin-bottom: 18px;
+  color: #a9c9ff;
+  font-size: 14px;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.manage-announcements-header {
+  margin-bottom: 25px;
+}
+
+.manage-announcements-header > p {
+  margin: 0 0 8px;
+  color: #a9c9ff;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1.2px;
+}
+
+.manage-announcements-header h1 {
+  margin: 0 0 8px;
+}
+
+.manage-announcements-header span,
+.manage-announcements-card > p,
+.manage-announcements-list-heading p {
+  color: #91a4bf;
+}
+
+.manage-announcements-card {
+  margin-bottom: 22px;
+  padding: 24px;
+  border: 1px solid #26364f;
+  border-radius: 14px;
+  background: rgba(21, 31, 49, 0.94);
+}
+
+.manage-announcements-card h2 {
+  margin: 0 0 20px;
+  font-size: 19px;
+}
+
+.announcement-form-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  gap: 16px;
+}
+
+.announcement-form-grid label {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  color: #b9c9df;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.announcement-form-grid input:not([type="checkbox"]),
+.announcement-form-grid select,
+.announcement-form-grid textarea {
+  width: 100%;
+  padding: 11px 12px;
+  border: 1px solid #30415b;
+  border-radius: 7px;
+  background: #111c2e;
+  color: #dce5f0;
+  font: inherit;
+}
+
+.announcement-form-grid input:not([type="checkbox"]),
+.announcement-form-grid select {
+  height: 42px;
+}
+
+.announcement-form-grid textarea {
+  resize: vertical;
+}
+
+.announcement-form-grid input:focus,
+.announcement-form-grid select:focus,
+.announcement-form-grid textarea:focus {
+  outline: 2px solid rgba(139, 184, 255, 0.45);
+  border-color: #5b8fe0;
+}
+
+.announcement-form-grid .announcement-important-option {
+  flex-direction: row;
+  align-items: center;
+  align-self: end;
+  min-height: 42px;
+}
+
+.announcement-important-option input {
+  width: 17px;
+  height: 17px;
+  accent-color: #4d83d3;
+}
+
+.announcement-message-field {
+  grid-column: 1 / -1;
+}
+
+.announcement-form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 18px;
+}
+
+.announcement-submit,
+.announcement-cancel,
+.manage-announcement-actions button {
+  min-height: 38px;
+  padding: 8px 13px;
+  border: 1px solid #345b91;
+  border-radius: 7px;
+  background: #24467b;
+  color: #fff;
+  font: inherit;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.announcement-cancel {
+  border-color: #30415b;
+  background: #111c2e;
+  color: #b9c9df;
+}
+
+.manage-announcements-message {
+  color: #a9c9ff;
+}
+
+.manage-announcements-list-heading {
+  display: flex;
+  justify-content: space-between;
+}
+
+.manage-announcements-list-heading h2 {
+  margin-bottom: 5px;
+}
+
+.manage-announcements-list-heading p {
+  margin: 0 0 18px;
+  font-size: 13px;
+}
+
+.manage-announcement-list {
+  display: grid;
+  gap: 12px;
+}
+
+.manage-announcement-item {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 18px;
+  border: 1px solid #26364f;
+  border-radius: 10px;
+  background: #111c2e;
+}
+
+.manage-announcement-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 9px;
+  color: #91a4bf;
+  font-size: 12px;
+}
+
+.manage-announcement-meta strong {
+  color: #ffadb8;
+}
+
+.manage-announcement-item h3 {
+  margin: 10px 0 6px;
+}
+
+.manage-announcement-item p {
+  margin: 0;
+  color: #b9c9df;
+  line-height: 1.5;
+  white-space: pre-wrap;
+}
+
+.manage-announcement-actions {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.manage-announcement-actions button {
+  min-height: 34px;
+  padding: 6px 10px;
+  background: #18345f;
+  color: #c2d8ff;
+}
+
+.manage-announcement-actions .manage-announcement-delete {
+  border-color: #5a2b3a;
+  background: #3a1f2b;
+  color: #ffadb8;
+}
+
+.manage-announcements-empty {
+  margin-bottom: 0;
+}
+
+@media (max-width: 760px) {
+  .manage-announcements-page {
+    padding: 18px;
+  }
+
+  .manage-announcements-card {
+    padding: 18px;
+  }
+
+  .announcement-form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .announcement-message-field {
+    grid-column: auto;
+  }
+
+  .manage-announcement-item {
+    flex-direction: column;
+  }
+}

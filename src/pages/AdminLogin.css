@@ -1,0 +1,148 @@
+.admin-login-page {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 30px;
+  background: #07111f;
+}
+
+.admin-login-card {
+  width: 100%;
+  max-width: 480px;
+  padding: 40px;
+  border-radius: 22px;
+  background: #111c2d;
+  border: 1px solid #26364d;
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.35);
+  color: white;
+  text-align: center;
+}
+
+.admin-login-logo {
+  width: 112px;
+  height: 112px;
+  margin: 0 auto 15px;
+  overflow: hidden;
+  border-radius: 50%;
+  background: #fff;
+}
+
+.admin-login-logo img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.admin-login-card h1 {
+  margin: 0;
+  font-size: 38px;
+}
+
+.school-name {
+  margin: 5px 0 30px;
+  color: #aebdd2;
+}
+
+.admin-title {
+  text-align: left;
+  margin-bottom: 25px;
+}
+
+.admin-title h2 {
+  margin: 0 0 5px;
+  font-size: 25px;
+}
+
+.admin-title p {
+  margin: 0;
+  color: #94a3b8;
+}
+
+.admin-login-card form {
+  text-align: left;
+}
+
+.admin-login-card label {
+  display: block;
+  margin: 18px 0 8px;
+  font-weight: 600;
+}
+
+.admin-login-card input {
+  width: 100%;
+  padding: 14px;
+  border: 1px solid #34465e;
+  border-radius: 10px;
+  background: #0b1626;
+  color: white;
+  font-size: 15px;
+  outline: none;
+}
+
+.admin-login-card input:focus {
+  border-color: #3b82f6;
+}
+
+.admin-login-card input::placeholder {
+  color: #718096;
+}
+
+.admin-login-card form button {
+  width: 100%;
+  margin-top: 25px;
+  padding: 14px;
+  border: none;
+  border-radius: 10px;
+  background: linear-gradient(100deg, #356dcc, #195d9f);
+  color: white;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.admin-login-card form button:hover {
+  filter: brightness(1.08);
+}
+
+.admin-demo {
+  margin-top: 25px;
+  padding: 15px;
+  border-radius: 10px;
+  background: #0b1626;
+  color: #94a3b8;
+  text-align: left;
+  font-size: 13px;
+}
+
+.admin-demo strong {
+  color: white;
+}
+
+.admin-demo p {
+  margin: 5px 0;
+}
+
+.back-student {
+  margin-top: 20px;
+  border: none;
+  background: transparent;
+  color: #60a5fa;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.back-student:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 600px) {
+  .admin-login-page {
+    padding: 15px;
+  }
+
+  .admin-login-card {
+    padding: 28px 22px;
+  }
+}

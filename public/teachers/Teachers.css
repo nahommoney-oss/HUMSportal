@@ -1,0 +1,161 @@
+.teachers-page {
+  margin-left: 250px;
+  min-height: 100vh;
+  padding: 40px;
+  background: #f5f7fb;
+}
+
+.teachers-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 35px;
+}
+
+.page-label {
+  color: #2563eb;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  margin-bottom: 8px;
+}
+
+.teachers-header h1 {
+  margin: 0;
+  font-size: 32px;
+  color: #111827;
+}
+
+.teachers-header p:last-child {
+  color: #6b7280;
+  margin-top: 8px;
+}
+
+.teacher-count {
+  background: white;
+  padding: 18px 25px;
+  border-radius: 15px;
+  border: 1px solid #e5e7eb;
+  text-align: center;
+}
+
+.teacher-count strong {
+  display: block;
+  color: #2563eb;
+  font-size: 28px;
+}
+
+.teacher-count span {
+  color: #6b7280;
+  font-size: 13px;
+}
+
+.teachers-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+.teacher-card {
+  background: white;
+  border-radius: 20px;
+  overflow: hidden;
+  border: 1px solid #e5e7eb;
+  transition: 0.25s ease;
+}
+
+.teacher-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.08);
+}
+
+.teacher-photo-wrapper {
+  height: 230px;
+  background: #eff6ff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.teacher-photo {
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 5px solid white;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.12);
+}
+
+.teacher-info {
+  padding: 22px;
+}
+
+.teacher-info h2 {
+  margin: 0;
+  color: #111827;
+  font-size: 20px;
+}
+
+.teacher-subject {
+  color: #2563eb;
+  font-weight: 600;
+  margin: 7px 0 20px;
+}
+
+.teacher-details {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.teacher-details div {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #6b7280;
+  font-size: 14px;
+}
+
+.contact-teacher {
+  display: block;
+  text-align: center;
+  text-decoration: none;
+  background: #2563eb;
+  color: white;
+  padding: 12px;
+  border-radius: 10px;
+  font-weight: 600;
+  transition: 0.2s;
+}
+
+.contact-teacher:hover {
+  background: #1d4ed8;
+}
+
+@media (max-width: 1100px) {
+  .teachers-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .teachers-page {
+    margin-left: 0;
+    padding: 25px 18px;
+  }
+
+  .teachers-header {
+    align-items: flex-start;
+    gap: 20px;
+  }
+
+  .teachers-header h1 {
+    font-size: 26px;
+  }
+
+  .teachers-grid {
+    grid-template-columns: 1fr;
+  }
+}

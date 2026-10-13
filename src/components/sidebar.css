@@ -1,0 +1,93 @@
+.sidebar {
+  width: 250px;
+  min-height: 100vh;
+  background: rgba(17, 26, 42, 0.96);
+  border-right: 1px solid #26364f;
+  display: flex;
+  flex-direction: column;
+  padding: 25px 16px;
+  position: fixed;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  z-index: 10;
+  box-shadow: 12px 0 30px rgba(0, 0, 0, 0.12);
+}
+
+.sidebar-logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 5px 10px 30px;
+}
+
+.logo-box {
+  width: 45px;
+  height: 45px;
+  flex: 0 0 45px;
+  border-radius: 50%;
+  object-fit: cover;
+  background: #fff;
+}
+
+.sidebar-logo h2 {
+  margin: 0;
+  color: #779bd3;
+  font-size: 21px;
+}
+
+.sidebar-logo span {
+  font-size: 11px;
+  color: #91a4bf;
+}
+
+.sidebar-menu {
+  flex: 1;
+}
+
+.menu-title {
+  font-size: 10px;
+  font-weight: 700;
+  color: #91a4bf;
+  margin: 20px 10px 10px;
+  letter-spacing: 1px;
+}
+
+.menu-link {
+  display: flex;
+  align-items: center;
+  padding: 13px 14px;
+  margin-bottom: 5px;
+  border-radius: 10px;
+  text-decoration: none;
+  color: #a7b7cc;
+  font-size: 14px;
+  font-weight: 600;
+  transition: 0.2s;
+}
+
+.menu-link:hover {
+  background: #1b2940;
+  color: #779bd3;
+}
+
+.menu-link.active {
+  background: #18345f;
+  color: #779bd3;
+}
+
+.logout-button {
+  border: none;
+  background: #3a1f2b;
+  color: #dc2626;
+  padding: 13px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 14px;
+  text-align: left;
+}
+
+.logout-button:hover {
+  background: #522637;
+}

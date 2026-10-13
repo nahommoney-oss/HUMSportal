@@ -1,0 +1,132 @@
+.announcements-page {
+  margin-left: 250px;
+  min-height: 100vh;
+  padding: 42px 44px;
+  background:
+    radial-gradient(circle at 78% 0%, rgba(32, 77, 141, 0.2), transparent 28%),
+    #0b1220;
+}
+
+.page-header {
+  margin-bottom: 30px;
+}
+
+.page-label {
+  color: #779bd3;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  margin-bottom: 8px;
+}
+
+.page-header h1 {
+  margin: 0;
+  font-size: 32px;
+  color: #dce5f0;
+}
+
+.page-header p:last-child {
+  color: #91a4bf;
+  margin-top: 8px;
+}
+
+.announcements-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  max-width: 900px;
+}
+
+.announcement-card {
+  display: flex;
+  gap: 20px;
+  background: rgba(21, 31, 49, 0.94);
+  border-radius: 16px;
+  padding: 24px;
+  border: 1px solid #26364f;
+  transition: 0.2s ease;
+}
+
+.announcement-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 16px 34px rgba(0, 0, 0, 0.2);
+}
+
+.announcement-card.important {
+  border-left: 5px solid #ef4444;
+}
+
+.announcement-icon {
+  width: 55px;
+  height: 55px;
+  min-width: 55px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #18345f;
+  border-radius: 14px;
+  font-size: 25px;
+  color: #c2d8ff;
+  font-size: 9px;
+  font-weight: 700;
+  text-align: center;
+}
+
+.announcement-content {
+  flex: 1;
+}
+
+.announcement-top {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+
+.announcement-type {
+  color: #779bd3;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.important-badge {
+  background: #48232f;
+  color: #ff8e9d;
+  padding: 4px 9px;
+  border-radius: 20px;
+  font-size: 10px;
+  font-weight: 700;
+}
+
+.announcement-content h2 {
+  margin: 5px 0 10px;
+  color: #dce5f0;
+  font-size: 20px;
+}
+
+.announcement-content p {
+  color: #b9c9df;
+  line-height: 1.6;
+  margin-bottom: 15px;
+}
+
+.announcement-date {
+  color: #91a4bf;
+  font-size: 13px;
+}
+
+@media (max-width: 768px) {
+  .announcements-page {
+    margin-left: 0;
+    padding: 25px 18px;
+  }
+
+  .page-header h1 {
+    font-size: 26px;
+  }
+
+  .announcement-card {
+    padding: 18px;
+  }
+}

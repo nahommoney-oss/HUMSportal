@@ -1,0 +1,20 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family:
+    "Trebuchet MS",
+    "Segoe UI",
+    sans-serif;
+  background: #0b1220;
+  color: #d5dfec;
+}
+
+button,
+input,
+select {
+  font-family: inherit;
+}
