@@ -21,6 +21,7 @@ import ManageReports from "./pages/ManageReports.jsx";
 import ManageAcademics from "./pages/ManageAcademics.jsx";
 import ManageAnnouncements from "./pages/ManageAnnouncements.jsx";
 import ManageSchedule from "./pages/ManageSchedule.jsx";
+import { initializeDatabase } from "./data/database.js";
 
 function AdminRoute({ children }) {
   useLocation();
@@ -30,6 +31,8 @@ function AdminRoute({ children }) {
 }
 
 function App() {
+  initializeDatabase();
+
   return (
     <BrowserRouter>
       <Routes>

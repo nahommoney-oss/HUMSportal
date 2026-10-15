@@ -71,12 +71,6 @@ function AdminLogin() {
 
         </form>
 
-        <div className="admin-demo">
-          <strong>Demo Login</strong>
-          <p>Username: admin</p>
-          <p>Password: admin123</p>
-        </div>
-
         <button
           className="back-student"
           onClick={goToStudentLogin}

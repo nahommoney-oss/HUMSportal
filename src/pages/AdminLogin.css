@@ -106,24 +106,6 @@
   filter: brightness(1.08);
 }
 
-.admin-demo {
-  margin-top: 25px;
-  padding: 15px;
-  border-radius: 10px;
-  background: #0b1626;
-  color: #94a3b8;
-  text-align: left;
-  font-size: 13px;
-}
-
-.admin-demo strong {
-  color: white;
-}
-
-.admin-demo p {
-  margin: 5px 0;
-}
-
 .back-student {
   margin-top: 20px;
   border: none;
