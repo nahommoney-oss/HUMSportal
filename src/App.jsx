@@ -26,7 +26,6 @@ import { initializeDatabase } from "./data/database.js";
 function AdminRoute({ children }) {
   useLocation();
   const isAdmin = localStorage.getItem("humsAdmin") === "true";
-
   return isAdmin ? children : <Navigate to="/admin-login" replace />;
 }
 

@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { verifyAdminCredentials } from "../data/adminCredentials.js";
 import "./AdminLogin.css";
 
 function AdminLogin() {
@@ -7,10 +8,17 @@ function AdminLogin() {
 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
 
   const handleLogin = (e) => {
     e.preventDefault();
-    alert("Admin authentication is not configured. Contact the portal administrator.");
+    setError("");
+    if (!verifyAdminCredentials(username, password)) {
+      setError("Invalid admin username or password.");
+      return;
+    }
+    localStorage.setItem("humsAdmin", "true");
+    navigate("/admin");
   };
 
   const goToStudentLogin = () => {
@@ -38,30 +46,42 @@ function AdminLogin() {
           <p>Sign in to manage the school portal</p>
         </div>
 
-        <form onSubmit={handleLogin}>
+        <p className="auth-message auth-warning" role="note">
+          Demo login: username <strong>admin</strong>, password{" "}
+          <strong>admin123</strong>. This browser-only login is not secure for
+          production use.
+        </p>
 
-          <label>Admin Username</label>
+        {error && (
+          <p className="auth-message auth-error" role="alert">
+            {error}
+          </p>
+        )}
+
+        <form onSubmit={handleLogin}>
+          <label htmlFor="admin-username">Admin Username</label>
           <input
+            id="admin-username"
             type="text"
+            autoComplete="username"
             placeholder="Enter admin username"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
             required
           />
 
-          <label>Password</label>
+          <label htmlFor="admin-password">Password</label>
           <input
+            id="admin-password"
             type="password"
+            autoComplete="current-password"
             placeholder="Enter admin password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
           />
 
-          <button type="submit">
-            Login to Admin Panel →
-          </button>
-
+          <button type="submit">Login to Admin Panel →</button>
         </form>
 
         <button

@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { readStudents } from "../data/studentRecords.js";
+import { updateAdminPassword } from "../data/adminCredentials.js";
 import "./AdminDashboard.css";
 
 function readRecords(key) {
@@ -18,6 +19,13 @@ function AdminDashboard() {
   const [students, setStudents] = useState(readStudents);
   const [teachers, setTeachers] = useState(() => readRecords("humsTeachers"));
   const [classes, setClasses] = useState(() => readRecords("humsClasses"));
+  const [showPasswordForm, setShowPasswordForm] = useState(false);
+  const [currentPassword, setCurrentPassword] = useState("");
+  const [newPassword, setNewPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [passwordError, setPasswordError] = useState("");
+  const [passwordMessage, setPasswordMessage] = useState("");
+  const [passwordBusy, setPasswordBusy] = useState(false);
 
   function refreshRecords() {
     setStudents(readStudents());
@@ -37,6 +45,36 @@ function AdminDashboard() {
   const logout = () => {
     localStorage.removeItem("humsAdmin");
     navigate("/admin-login");
+  };
+
+  const changePassword = (event) => {
+    event.preventDefault();
+    setPasswordError("");
+    setPasswordMessage("");
+
+    if (newPassword.length < 8) {
+      setPasswordError("The new password must be at least 8 characters.");
+      return;
+    }
+    if (newPassword !== confirmPassword) {
+      setPasswordError("The new passwords do not match.");
+      return;
+    }
+
+    try {
+      setPasswordBusy(true);
+      updateAdminPassword(currentPassword, newPassword);
+      setCurrentPassword("");
+      setNewPassword("");
+      setConfirmPassword("");
+      setPasswordMessage("Admin password updated in this browser.");
+    } catch (error) {
+      setPasswordError(
+        error instanceof Error ? error.message : "Unable to update the password."
+      );
+    } finally {
+      setPasswordBusy(false);
+    }
   };
 
   const subjectCount = new Set(
@@ -76,8 +114,69 @@ function AdminDashboard() {
             <h1>Admin Dashboard</h1>
             <p>Manage your school portal from here.</p>
           </div>
-
+          <button
+            className="change-password-btn"
+            type="button"
+            onClick={() => {
+              setShowPasswordForm((shown) => !shown);
+              setPasswordError("");
+              setPasswordMessage("");
+            }}
+          >
+            {showPasswordForm ? "Close password form" : "Change password"}
+          </button>
         </header>
+
+        {showPasswordForm && (
+          <section className="password-panel" aria-labelledby="change-password-title">
+            <h2 id="change-password-title">Change admin password</h2>
+            <p>Confirm your current password before choosing a new one.</p>
+            {passwordError && (
+              <p className="password-feedback password-error" role="alert">
+                {passwordError}
+              </p>
+            )}
+            {passwordMessage && (
+              <p className="password-feedback password-success" role="status">
+                {passwordMessage}
+              </p>
+            )}
+            <form onSubmit={changePassword}>
+              <label htmlFor="current-admin-password">Current password</label>
+              <input
+                id="current-admin-password"
+                type="password"
+                autoComplete="current-password"
+                value={currentPassword}
+                onChange={(event) => setCurrentPassword(event.target.value)}
+                required
+              />
+              <label htmlFor="new-admin-password">New password</label>
+              <input
+                id="new-admin-password"
+                type="password"
+                autoComplete="new-password"
+                minLength={8}
+                value={newPassword}
+                onChange={(event) => setNewPassword(event.target.value)}
+                required
+              />
+              <label htmlFor="confirm-admin-password">Confirm new password</label>
+              <input
+                id="confirm-admin-password"
+                type="password"
+                autoComplete="new-password"
+                minLength={8}
+                value={confirmPassword}
+                onChange={(event) => setConfirmPassword(event.target.value)}
+                required
+              />
+              <button type="submit" disabled={passwordBusy}>
+                {passwordBusy ? "Updating..." : "Update password"}
+              </button>
+            </form>
+          </section>
+        )}
 
         <section className="welcome-box">
           <div>

@@ -14,3 +14,13 @@ The React Compiler is not enabled on this template because of its impact on dev 
 ## Expanding the Oxlint configuration
 
 If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and Oxlint's TypeScript related rules in your project.
+
+## Admin login
+
+For local/demo use, sign in with username `admin` and password `admin123`.
+Admins can change the password from the dashboard; the changed password is
+saved only in that browser.
+
+This client-side login is not secure authentication: credentials and access
+checks are part of the frontend and can be bypassed. Do not use it to protect
+real student or school data in a public deployment.

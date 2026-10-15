@@ -164,7 +164,6 @@ export function initializeDatabase() {
     localStorage.removeItem("humsStudent");
   }
 
-  localStorage.removeItem("humsAdmin");
   removeDemoRecords("humsTeachers", DEMO_TEACHER_IDS);
   removeDemoRecords("humsClasses", DEMO_CLASS_IDS);
   removeDemoRecords("humsAnnouncements", DEMO_ANNOUNCEMENT_IDS);
