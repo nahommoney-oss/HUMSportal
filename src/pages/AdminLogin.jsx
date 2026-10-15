@@ -10,14 +10,7 @@ function AdminLogin() {
 
   const handleLogin = (e) => {
     e.preventDefault();
-
-    // Demo admin account
-    if (username === "admin" && password === "admin123") {
-      localStorage.setItem("humsAdmin", "true");
-      navigate("/admin");
-    } else {
-      alert("Invalid admin username or password.");
-    }
+    alert("Admin authentication is not configured. Contact the portal administrator.");
   };
 
   const goToStudentLogin = () => {

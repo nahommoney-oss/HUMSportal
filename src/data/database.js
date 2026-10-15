@@ -6,35 +6,7 @@ import teachers from "./teachers.js";
 const DATABASE_DEFAULTS = {
   humsStudents: students,
   humsTeachers: teachers,
-  humsClasses: [
-    {
-      id: "class-9a",
-      className: "Grade 9 NaturalA",
-      grade: "9",
-      stream: "Natural",
-      section: "A",
-      academicYear: "2026/2027",
-      teacherId: "T-101",
-    },
-    {
-      id: "class-10a",
-      className: "Grade 10 ScienceA",
-      grade: "10",
-      stream: "Science",
-      section: "A",
-      academicYear: "2026/2027",
-      teacherId: "T-102",
-    },
-    {
-      id: "class-11n",
-      className: "Grade 11 NaturalA",
-      grade: "11",
-      stream: "Natural",
-      section: "A",
-      academicYear: "2026/2027",
-      teacherId: "T-103",
-    },
-  ],
+  humsClasses: [],
   humsAnnouncements: announcements,
   humsSchedule: scheduleData,
 };
@@ -85,6 +57,89 @@ function sanitizeDemoStudents(value) {
   });
 }
 
+const DEMO_TEACHER_IDS = new Set(["t-101", "t-102", "t-103", "t-104", "t-105"]);
+const DEMO_CLASS_IDS = new Set(["class-9a", "class-10a", "class-11n"]);
+const DEMO_ANNOUNCEMENT_IDS = new Set(["ann-1", "ann-2", "ann-3"]);
+const DEMO_SCHEDULE_TEACHERS = new Set([
+  "mekdes tadesse",
+  "daniel bekele",
+  "sofonias haile",
+  "aster kassa",
+  "getachew bekele",
+  "abraham fekadu",
+  "berhanu taye",
+  "tewodros assefa",
+  "mesfin abebe",
+  "yohannes tadesse",
+  "martha diriba",
+  "school mentor",
+]);
+
+function removeDemoRecords(key, demoIds) {
+  const storedValue = localStorage.getItem(key);
+  if (storedValue === null) {
+    return;
+  }
+
+  try {
+    const records = JSON.parse(storedValue);
+    if (!Array.isArray(records)) {
+      return;
+    }
+
+    const remainingRecords = records.filter(
+      (record) => !demoIds.has(String(record?.id ?? "").trim().toLowerCase())
+    );
+    if (remainingRecords.length !== records.length) {
+      localStorage.setItem(key, JSON.stringify(remainingRecords));
+    }
+  } catch (error) {
+    console.error(`Unable to remove demo records from ${key}.`, error);
+  }
+}
+
+function removeDemoScheduleLessons(schedule) {
+  if (Array.isArray(schedule)) {
+    const retainedLessons = schedule.filter((lesson) => {
+      const teacherName = String(lesson?.teacher ?? "").trim().toLowerCase();
+      return !DEMO_SCHEDULE_TEACHERS.has(teacherName);
+    });
+    const cleanedLessons = retainedLessons
+      .map(removeDemoScheduleLessons)
+      .filter((lesson) => lesson !== undefined);
+
+    if (cleanedLessons.length === 0) {
+      return undefined;
+    }
+
+    const changed =
+      cleanedLessons.length !== schedule.length ||
+      cleanedLessons.some((lesson, index) => lesson !== schedule[index]);
+    return changed ? cleanedLessons : schedule;
+  }
+
+  if (!schedule || typeof schedule !== "object") {
+    return schedule;
+  }
+
+  const cleanedSchedule = {};
+  let changed = false;
+  Object.entries(schedule).forEach(([key, value]) => {
+    const cleanedValue = removeDemoScheduleLessons(value);
+    if (cleanedValue === undefined) {
+      changed = true;
+    } else {
+      cleanedSchedule[key] = cleanedValue;
+      changed ||= cleanedValue !== value;
+    }
+  });
+
+  if (Object.keys(cleanedSchedule).length === 0) {
+    return undefined;
+  }
+  return changed ? cleanedSchedule : schedule;
+}
+
 export function initializeDatabase() {
   if (typeof window === "undefined") {
     return;
@@ -109,10 +164,44 @@ export function initializeDatabase() {
     localStorage.removeItem("humsStudent");
   }
 
+  localStorage.removeItem("humsAdmin");
+  removeDemoRecords("humsTeachers", DEMO_TEACHER_IDS);
+  removeDemoRecords("humsClasses", DEMO_CLASS_IDS);
+  removeDemoRecords("humsAnnouncements", DEMO_ANNOUNCEMENT_IDS);
+
+  const storedSchedule = localStorage.getItem("humsSchedule");
+  if (storedSchedule !== null) {
+    try {
+      const parsedSchedule = JSON.parse(storedSchedule);
+      const cleanedSchedule = removeDemoScheduleLessons(parsedSchedule) ?? {};
+      if (JSON.stringify(cleanedSchedule) !== JSON.stringify(parsedSchedule)) {
+        localStorage.setItem(
+          "humsSchedule",
+          JSON.stringify(cleanedSchedule)
+        );
+      }
+    } catch (error) {
+      console.error("Unable to remove demo lessons from humsSchedule.", error);
+    }
+  }
+
   Object.entries(DATABASE_DEFAULTS).forEach(([key, value]) => {
     const currentValue = localStorage.getItem(key);
 
-    if (key === "humsStudents") {
+    if (key === "humsStudents" || Array.isArray(value) && value.length === 0) {
+      if (currentValue === null) {
+        localStorage.setItem(key, JSON.stringify(value));
+      }
+      return;
+    }
+
+    if (
+      key === "humsSchedule" &&
+      value &&
+      typeof value === "object" &&
+      !Array.isArray(value) &&
+      Object.keys(value).length === 0
+    ) {
       if (currentValue === null) {
         localStorage.setItem(key, JSON.stringify(value));
       }
