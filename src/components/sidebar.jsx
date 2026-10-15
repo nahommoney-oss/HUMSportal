@@ -1,11 +1,20 @@
 import { NavLink, useNavigate } from "react-router-dom";
+import { getSupabase } from "../data/supabaseClient.js";
 import "./sidebar.css";
 
 function Sidebar() {
   const navigate = useNavigate();
 
-  const logout = () => {
-    localStorage.removeItem("humsStudent");
+  const logout = async () => {
+    const { error } = await getSupabase().auth.signOut();
+    if (error) {
+      window.dispatchEvent(
+        new CustomEvent("hums-cloud-error", {
+          detail: `Unable to sign out: ${error.message}`,
+        })
+      );
+      return;
+    }
     navigate("/");
   };
 

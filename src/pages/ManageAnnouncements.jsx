@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { readAnnouncements, saveAnnouncements } from "../data/announcementsStore.js";
+import { deletePortalRecord } from "../data/portalCloud.js";
 import "./ManageAnnouncements.css";
 
 const EMPTY_FORM = {
@@ -89,7 +90,17 @@ function ManageAnnouncements() {
     window.scrollTo({ top: 0, behavior: "smooth" });
   }
 
-  function deleteAnnouncement(id) {
+  async function deleteAnnouncement(id) {
+    try {
+      await deletePortalRecord("announcements", id);
+    } catch (error) {
+      window.dispatchEvent(
+        new CustomEvent("hums-cloud-error", {
+          detail: error instanceof Error ? error.message : "Unable to delete announcement.",
+        })
+      );
+      return;
+    }
     const updatedAnnouncements = announcements.filter(
       (announcement) => announcement.id !== id
     );

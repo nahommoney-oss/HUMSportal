@@ -1,6 +1,12 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { verifyAdminCredentials } from "../data/adminCredentials.js";
+import {
+  checkPortalAdmin,
+  hasLocalPortalRecords,
+  loadPortalData,
+  syncLocalPortalData,
+} from "../data/portalCloud.js";
+import { getAdminLoginEmail, getSupabase } from "../data/supabaseClient.js";
 import "./AdminLogin.css";
 
 function AdminLogin() {
@@ -9,16 +15,49 @@ function AdminLogin() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [busy, setBusy] = useState(false);
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
     setError("");
-    if (!verifyAdminCredentials(username, password)) {
-      setError("Invalid admin username or password.");
-      return;
+    setBusy(true);
+    try {
+      if (username.trim().toLowerCase() !== "admin") {
+        throw new Error("Invalid admin username or password.");
+      }
+      const client = getSupabase();
+      const { error: signInError } = await client.auth.signInWithPassword({
+        email: getAdminLoginEmail(),
+        password,
+      });
+      if (signInError) {
+        throw new Error("Invalid admin username or password.");
+      }
+      if (!(await checkPortalAdmin())) {
+        await client.auth.signOut();
+        throw new Error("This account has not been granted school administrator access.");
+      }
+
+      const { count, error: countError } = await client
+        .from("portal_records")
+        .select("id", { count: "exact", head: true });
+      if (countError) throw countError;
+
+      if (count === 0 && hasLocalPortalRecords()) {
+        localStorage.setItem("humsImportIncomplete", "true");
+        await syncLocalPortalData();
+      }
+      await loadPortalData();
+      navigate("/admin");
+    } catch (loginError) {
+      setError(
+        loginError instanceof Error
+          ? loginError.message
+          : "Unable to sign in. Check the shared database setup and try again."
+      );
+    } finally {
+      setBusy(false);
     }
-    localStorage.setItem("humsAdmin", "true");
-    navigate("/admin");
   };
 
   const goToStudentLogin = () => {
@@ -47,9 +86,7 @@ function AdminLogin() {
         </div>
 
         <p className="auth-message auth-warning" role="note">
-          Demo login: username <strong>admin</strong>, password{" "}
-          <strong>admin123</strong>. This browser-only login is not secure for
-          production use.
+          Sign in with the administrator credentials configured for the shared school database.
         </p>
 
         {error && (
@@ -81,7 +118,9 @@ function AdminLogin() {
             required
           />
 
-          <button type="submit">Login to Admin Panel →</button>
+          <button type="submit" disabled={busy}>
+            {busy ? "Signing in…" : "Login to Admin Panel →"}
+          </button>
         </form>
 
         <button

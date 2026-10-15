@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { readStudents } from "../data/studentRecords.js";
+import { deletePortalRecord } from "../data/portalCloud.js";
 import "./ManageClasses.css";
 
 const CLASS_KEY = "humsClasses";
@@ -72,10 +73,12 @@ export default function ManageClasses() {
 
   useEffect(() => {
     localStorage.setItem(CLASS_KEY, JSON.stringify(classes));
+    window.dispatchEvent(new Event("hums-records-updated"));
   }, [classes]);
 
   useEffect(() => {
     localStorage.setItem(TEACHER_KEY, JSON.stringify(teachers));
+    window.dispatchEvent(new Event("hums-records-updated"));
   }, [teachers]);
 
   useEffect(() => {
@@ -241,7 +244,7 @@ export default function ManageClasses() {
     window.scrollTo({ top: 0, behavior: "smooth" });
   }
 
-  function deleteClass(classItem) {
+  async function deleteClass(classItem) {
     const assignedStudents = getClassStudents(classItem);
 
     const message =
@@ -250,6 +253,17 @@ export default function ManageClasses() {
         : `Delete ${classItem.className}?`;
 
     if (!window.confirm(message)) return;
+
+    try {
+      await deletePortalRecord("classes", classItem.id);
+    } catch (error) {
+      window.dispatchEvent(
+        new CustomEvent("hums-cloud-error", {
+          detail: error instanceof Error ? error.message : "Unable to delete class.",
+        })
+      );
+      return;
+    }
 
     setClasses((previous) =>
       previous.filter(

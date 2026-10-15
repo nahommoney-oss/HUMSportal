@@ -1,6 +1,7 @@
 
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { deletePortalRecord } from "../data/portalCloud.js";
 import "./ManageTeachers.css";
 
 const emptyTeacher = {
@@ -123,8 +124,18 @@ export default function ManageTeachers() {
     window.scrollTo({ top: 0, behavior: "smooth" });
   }
 
-  function deleteTeacher(id) {
+  async function deleteTeacher(id) {
     if (window.confirm("Are you sure you want to delete this teacher?")) {
+      try {
+        await deletePortalRecord("teachers", id);
+      } catch (error) {
+        window.dispatchEvent(
+          new CustomEvent("hums-cloud-error", {
+            detail: error instanceof Error ? error.message : "Unable to delete teacher.",
+          })
+        );
+        return;
+      }
       setTeachers((previous) =>
         previous.filter((teacher) => teacher.id !== id)
       );

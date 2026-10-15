@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { readStudents } from "../data/studentRecords.js";
-import { updateAdminPassword } from "../data/adminCredentials.js";
+import { getSupabase } from "../data/supabaseClient.js";
 import "./AdminDashboard.css";
 
 function readRecords(key) {
@@ -42,12 +42,20 @@ function AdminDashboard() {
     };
   }, []);
 
-  const logout = () => {
-    localStorage.removeItem("humsAdmin");
+  const logout = async () => {
+    const { error } = await getSupabase().auth.signOut();
+    if (error) {
+      window.dispatchEvent(
+        new CustomEvent("hums-cloud-error", {
+          detail: `Unable to sign out: ${error.message}`,
+        })
+      );
+      return;
+    }
     navigate("/admin-login");
   };
 
-  const changePassword = (event) => {
+  const changePassword = async (event) => {
     event.preventDefault();
     setPasswordError("");
     setPasswordMessage("");
@@ -61,13 +69,29 @@ function AdminDashboard() {
       return;
     }
 
+    setPasswordBusy(true);
     try {
-      setPasswordBusy(true);
-      updateAdminPassword(currentPassword, newPassword);
+      const client = getSupabase();
+      const { data, error: sessionError } = await client.auth.getSession();
+      if (sessionError) throw sessionError;
+      if (!data.session?.user.email) {
+        throw new Error("Your administrator session has expired. Sign in again.");
+      }
+      const { error: verificationError } = await client.auth.signInWithPassword({
+        email: data.session.user.email,
+        password: currentPassword,
+      });
+      if (verificationError) {
+        throw new Error("The current password is incorrect.");
+      }
+      const { error: updateError } = await client.auth.updateUser({
+        password: newPassword,
+      });
+      if (updateError) throw updateError;
       setCurrentPassword("");
       setNewPassword("");
       setConfirmPassword("");
-      setPasswordMessage("Admin password updated in this browser.");
+      setPasswordMessage("Administrator password updated for all devices.");
     } catch (error) {
       setPasswordError(
         error instanceof Error ? error.message : "Unable to update the password."
@@ -181,7 +205,7 @@ function AdminDashboard() {
         <section className="welcome-box">
           <div>
             <h2>Welcome back, Admin</h2>
-            <p>Current counts are based on the records you have added.</p>
+            <p>Current counts are based on records in the shared school database.</p>
           </div>
         </section>
 

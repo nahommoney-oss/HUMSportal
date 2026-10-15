@@ -1,46 +1,54 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { readStudents } from "../data/studentRecords.js";
+import { loadPortalData } from "../data/portalCloud.js";
+import { getSupabase, studentLoginEmail } from "../data/supabaseClient.js";
 import "./Login.css";
 
 function Login() {
   const [studentId, setStudentId] = useState("");
   const [password, setPassword] = useState("");
   const [grade, setGrade] = useState("9");
+  const [error, setError] = useState("");
+  const [busy, setBusy] = useState(false);
 
   const navigate = useNavigate();
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
-
-    if (!studentId || !password) {
-      alert("Please enter your Student ID and Password.");
-      return;
+    setError("");
+    setBusy(true);
+    try {
+      const { error: signInError } = await getSupabase().auth.signInWithPassword({
+        email: studentLoginEmail(studentId),
+        password,
+      });
+      if (signInError) {
+        throw new Error("Invalid Student ID or password, or this account is inactive.");
+      }
+      const rows = await loadPortalData();
+      const student = rows.find((row) => row.record_type === "students");
+      if (!student || String(student.grade) !== grade) {
+        await getSupabase().auth.signOut();
+        throw new Error(
+          student
+            ? "The selected grade does not match this student account."
+            : "This student account is inactive or not set up. Ask the school administrator for help."
+        );
+      }
+      localStorage.setItem(
+        "humsStudent",
+        JSON.stringify({ id: student.record_id, grade: String(student.grade) })
+      );
+      navigate("/dashboard");
+    } catch (loginError) {
+      setError(
+        loginError instanceof Error
+          ? loginError.message
+          : "Unable to sign in. Check the shared database setup and try again."
+      );
+    } finally {
+      setBusy(false);
     }
-
-    const student = readStudents().find(
-      (item) =>
-        String(item.id).trim().toLowerCase() ===
-          studentId.trim().toLowerCase() &&
-        item.password === password &&
-        String(item.grade) === grade &&
-        String(item.status ?? "Active").toLowerCase() === "active"
-    );
-
-    if (!student) {
-      alert("Invalid Student ID, password, or grade.");
-      return;
-    }
-
-    localStorage.setItem(
-      "humsStudent",
-      JSON.stringify({
-        id: student.id,
-        grade: String(student.grade),
-      })
-    );
-
-    navigate("/dashboard");
   };
 
   return (
@@ -81,6 +89,12 @@ function Login() {
             </p>
           </div>
 
+          {error && (
+            <p className="auth-message auth-error" role="alert">
+              {error}
+            </p>
+          )}
+
           <form onSubmit={handleLogin}>
 
             <div className="input-group">
@@ -89,9 +103,11 @@ function Login() {
 
               <input
                 type="text"
+                autoComplete="username"
                 placeholder="Enter your student ID"
                 value={studentId}
                 onChange={(e) => setStudentId(e.target.value)}
+                required
               />
 
             </div>
@@ -102,9 +118,11 @@ function Login() {
 
               <input
                 type="password"
+                autoComplete="current-password"
                 placeholder="Enter your password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
+                required
               />
 
             </div>
@@ -128,8 +146,8 @@ function Login() {
 
             </div>
 
-            <button type="submit" className="login-button">
-              Login
+            <button type="submit" className="login-button" disabled={busy}>
+              {busy ? "Signing in…" : "Login"}
               <span>→</span>
             </button>
 

@@ -1,10 +1,16 @@
 import { useEffect, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import { readStudents } from "../data/studentRecords.js";
+import {
+  createPortalStudent,
+  deletePortalRecord,
+} from "../data/portalCloud.js";
 import "./ManageStudents.css";
 
 function ManageStudents() {
   const [showForm, setShowForm] = useState(false);
+  const [saving, setSaving] = useState(false);
+  const [formError, setFormError] = useState("");
   const [selectedStudent, setSelectedStudent] = useState(null);
   const [students, setStudents] = useState(() => {
     try {
@@ -52,6 +58,7 @@ function ManageStudents() {
   }, [searchTerm, selectedGrade, students]);
 
   const openForm = () => {
+    setFormError("");
     setFormData({
       id: "",
       password: "",
@@ -107,7 +114,7 @@ function ManageStudents() {
     reader.readAsDataURL(file);
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     const studentId = formData.id.trim();
 
@@ -122,20 +129,48 @@ function ManageStudents() {
       return;
     }
 
-    setStudents((current) => [
-      ...current,
-      {
-        ...formData,
-        id: studentId,
-        name: formData.name.trim(),
-        grade: String(formData.grade),
-        scores: [],
-      },
-    ]);
-    setShowForm(false);
+    const student = {
+      ...formData,
+      id: studentId,
+      name: formData.name.trim(),
+      grade: String(formData.grade),
+      scores: [],
+    };
+    setSaving(true);
+    setFormError("");
+    try {
+      await createPortalStudent(student);
+      setStudents((current) => [
+        ...current,
+        { ...student, password: "" },
+      ]);
+      setFormData((current) => ({ ...current, password: "" }));
+      setShowForm(false);
+    } catch (error) {
+      const message =
+        error instanceof Error
+          ? error.message
+          : "Unable to create the student account.";
+      setFormError(message);
+      window.dispatchEvent(
+        new CustomEvent("hums-cloud-error", { detail: message })
+      );
+    } finally {
+      setSaving(false);
+    }
   };
 
-  const deleteStudent = (studentId) => {
+  const deleteStudent = async (studentId) => {
+    try {
+      await deletePortalRecord("students", studentId);
+    } catch (error) {
+      window.dispatchEvent(
+        new CustomEvent("hums-cloud-error", {
+          detail: error instanceof Error ? error.message : "Unable to delete student.",
+        })
+      );
+      return;
+    }
     setStudents((current) => current.filter((student) => student.id !== studentId));
     if (selectedStudent?.id === studentId) {
       setSelectedStudent(null);
@@ -279,7 +314,7 @@ function ManageStudents() {
 
             <dl className="student-details-grid">
               <div><dt>Student ID</dt><dd>{selectedStudent.id || "—"}</dd></div>
-              <div><dt>Password</dt><dd>{selectedStudent.password || "Not set"}</dd></div>
+              <div><dt>Password</dt><dd>Stored securely and never displayed</dd></div>
               <div><dt>Full Name</dt><dd>{selectedStudent.name || "—"}</dd></div>
               <div><dt>Grade</dt><dd>Grade {selectedStudent.grade || "—"}</dd></div>
               {selectedStudent.stream && (
@@ -332,6 +367,12 @@ function ManageStudents() {
 
             <form onSubmit={handleSubmit}>
 
+              {formError && (
+                <p className="auth-message auth-error" role="alert">
+                  {formError}
+                </p>
+              )}
+
               <div className="photo-upload">
                 <div className="photo-placeholder">
                   {formData.photo ? (
@@ -383,6 +424,7 @@ function ManageStudents() {
                     name="password"
                     type="password"
                     placeholder="Set the student's password"
+                    minLength={8}
                     value={formData.password}
                     onChange={handleChange}
                     required
@@ -518,8 +560,9 @@ function ManageStudents() {
                 <button
                   type="submit"
                   className="save-btn"
+                  disabled={saving}
                 >
-                  Save Student
+                  {saving ? "Creating account…" : "Save Student"}
                 </button>
 
               </div>

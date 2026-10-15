@@ -145,6 +145,9 @@ export function initializeDatabase() {
     return;
   }
 
+  localStorage.removeItem("humsAdmin");
+  localStorage.removeItem("humsAdminPassword");
+
   const storedStudents = localStorage.getItem("humsStudents");
   if (storedStudents !== null) {
     try {
