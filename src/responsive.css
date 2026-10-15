@@ -1,0 +1,516 @@
+html,
+body,
+#root {
+  width: 100%;
+  min-height: 100%;
+}
+
+body {
+  overflow-x: hidden;
+}
+
+img,
+video,
+canvas,
+svg {
+  max-width: 100%;
+}
+
+button,
+input,
+select,
+textarea {
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+.dashboard,
+.scores-page,
+.schedule-page,
+.announcements-page,
+.teachers-page,
+.profile-page,
+.admin-main,
+.students-page,
+.manage-teachers-page,
+.cm-page,
+.academics-page,
+.manage-announcements-page,
+.manage-schedule-page,
+.reports-page {
+  min-width: 0;
+}
+
+.admin-sidebar {
+  flex: 0 0 250px;
+}
+
+.admin-main {
+  min-width: 0;
+}
+
+.students-table,
+.teacher-table-wrapper,
+.cm-table-wrap,
+.reports-table-wrap,
+.table-wrapper {
+  max-width: 100%;
+  overflow-x: auto;
+  overscroll-behavior-inline: contain;
+}
+
+.student-table-header,
+.student-table-row {
+  min-width: 800px;
+}
+
+.student-table {
+  overflow-x: auto;
+}
+
+@media (max-width: 900px) {
+  .dashboard,
+  .scores-page,
+  .schedule-page,
+  .announcements-page,
+  .teachers-page,
+  .profile-page {
+    padding: 28px 22px;
+  }
+
+  .dashboard-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .teachers-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .student-result-info,
+  .quick-info,
+  .schedule-info {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .student-result-info div:nth-child(2n),
+  .quick-info div:nth-child(2n),
+  .schedule-info div:nth-child(2n) {
+    border-right: 0;
+  }
+
+  .stats-container,
+  .action-container {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 768px) {
+  .portal,
+  .portal-layout {
+    min-height: 100vh;
+  }
+
+  .portal > .sidebar,
+  .portal-layout > .sidebar {
+    position: sticky;
+    inset: 0 0 auto;
+    z-index: 100;
+    display: flex;
+    width: 100%;
+    min-height: 0;
+    height: auto;
+    flex: none;
+    flex-direction: row;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 14px;
+    overflow: hidden;
+    border-right: 0;
+    border-bottom: 1px solid #26364f;
+    box-shadow: 0 8px 22px rgba(0, 0, 0, 0.18);
+  }
+
+  .sidebar-logo {
+    flex: 0 0 auto;
+    gap: 8px;
+    padding: 0;
+  }
+
+  .logo-box {
+    width: 38px;
+    height: 38px;
+    flex-basis: 38px;
+  }
+
+  .sidebar-logo h2 {
+    font-size: 17px;
+  }
+
+  .sidebar-logo span {
+    font-size: 10px;
+  }
+
+  .sidebar-menu {
+    display: flex;
+    min-width: 0;
+    flex: 1 1 auto;
+    align-items: center;
+    gap: 4px;
+    overflow-x: auto;
+    overscroll-behavior-inline: contain;
+    scrollbar-width: thin;
+  }
+
+  .sidebar-menu .menu-title {
+    display: none;
+  }
+
+  .sidebar-menu .menu-link {
+    flex: 0 0 auto;
+    margin: 0;
+    padding: 10px;
+    white-space: nowrap;
+    font-size: 12px;
+  }
+
+  .logout-button {
+    flex: 0 0 auto;
+    padding: 10px 12px;
+    font-size: 12px;
+    white-space: nowrap;
+  }
+
+  .dashboard,
+  .scores-page,
+  .schedule-page,
+  .announcements-page,
+  .teachers-page,
+  .profile-page {
+    width: 100%;
+    max-width: none;
+    margin-left: 0;
+    padding: 24px 18px;
+  }
+
+  .dashboard-header,
+  .admin-header,
+  .students-header,
+  .manage-teachers-header,
+  .teachers-header,
+  .reports-header {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .dashboard-grid,
+  .stats-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .admin-dashboard {
+    flex-direction: column;
+  }
+
+  .admin-sidebar {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    width: 100%;
+    min-height: 0;
+    flex: none;
+    flex-direction: row;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 14px;
+  }
+
+  .admin-sidebar-brand {
+    flex: 0 0 auto;
+    margin: 0 8px 0 0;
+  }
+
+  .admin-sidebar-brand img {
+    width: 38px;
+    height: 38px;
+    flex-basis: 38px;
+  }
+
+  .admin-sidebar h2 {
+    font-size: 20px;
+  }
+
+  .admin-sidebar .admin-title {
+    display: none;
+  }
+
+  .admin-sidebar nav {
+    min-width: 0;
+    flex: 1 1 auto;
+    flex-direction: row;
+    overflow-x: auto;
+    overscroll-behavior-inline: contain;
+    scrollbar-width: thin;
+  }
+
+  .admin-sidebar nav a {
+    flex: 0 0 auto;
+    padding: 10px;
+    white-space: nowrap;
+    font-size: 12px;
+  }
+
+  .logout-btn {
+    flex: 0 0 auto;
+    margin: 0 0 0 4px;
+    padding: 10px 12px;
+    white-space: nowrap;
+  }
+
+  .admin-main {
+    width: 100%;
+    padding: 22px 18px;
+  }
+
+  .password-panel {
+    width: 100%;
+    max-width: none;
+    margin: 0 0 22px;
+  }
+
+  .change-password-btn {
+    width: 100%;
+  }
+
+  .stats-container,
+  .action-container,
+  .reports-summary {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .table-header,
+  .table-row {
+    min-width: 600px;
+  }
+
+  .student-form {
+    width: 100%;
+    max-height: calc(100dvh - 24px);
+  }
+}
+
+@media (max-width: 540px) {
+  .login-page {
+    min-height: 100dvh;
+    padding: 28px 14px;
+  }
+
+  .school-brand {
+    padding: 0;
+  }
+
+  .school-logo {
+    width: 76px;
+    height: 76px;
+    margin-bottom: 12px;
+  }
+
+  .school-brand h1 {
+    font-size: 42px;
+  }
+
+  .school-brand p {
+    font-size: 16px;
+  }
+
+  .school-brand span {
+    font-size: 10px;
+    letter-spacing: 1px;
+  }
+
+  .login-card,
+  .admin-login-card {
+    padding: 24px 18px;
+  }
+
+  .admin-login-page {
+    min-height: 100dvh;
+    padding: 16px;
+  }
+
+  .admin-login-logo {
+    width: 82px;
+    height: 82px;
+  }
+
+  .dashboard,
+  .scores-page,
+  .schedule-page,
+  .announcements-page,
+  .teachers-page,
+  .profile-page,
+  .students-page,
+  .manage-teachers-page,
+  .cm-page,
+  .academics-page,
+  .manage-announcements-page,
+  .manage-schedule-page,
+  .reports-page,
+  .admin-main {
+    padding: 16px 12px;
+  }
+
+  .portal > .sidebar,
+  .portal-layout > .sidebar,
+  .admin-sidebar {
+    gap: 8px;
+    padding: 9px 10px;
+  }
+
+  .sidebar-logo span,
+  .admin-sidebar-brand h2 {
+    display: none;
+  }
+
+  .sidebar-menu .menu-link,
+  .admin-sidebar nav a {
+    padding: 9px 8px;
+    font-size: 11px;
+  }
+
+  .logout-button,
+  .logout-btn {
+    padding: 9px;
+    font-size: 11px;
+  }
+
+  .stats-container,
+  .action-container,
+  .score-summary,
+  .student-result-info,
+  .quick-info,
+  .schedule-info,
+  .academic-grid,
+  .profile-grid,
+  .reports-summary {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .student-result-info div,
+  .quick-info div,
+  .schedule-info div {
+    padding: 10px 0;
+    border-right: 0;
+    border-bottom: 1px solid #26364f;
+  }
+
+  .student-result-info div:last-child,
+  .quick-info div:last-child,
+  .schedule-info div:last-child {
+    border-bottom: 0;
+  }
+
+  .day-selector {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
+  }
+
+  .day-button {
+    padding: 12px 8px;
+  }
+
+  .lesson {
+    grid-template-columns: 65px 14px minmax(0, 1fr);
+  }
+
+  .lesson-time {
+    padding: 25px 6px 0 0;
+    text-align: left;
+  }
+
+  .lesson-time strong,
+  .lesson-content h3,
+  .lesson-content p,
+  .lesson-content span {
+    overflow-wrap: anywhere;
+  }
+
+  .lesson-time strong {
+    font-size: 10px;
+  }
+
+  .lesson-content {
+    min-width: 0;
+    margin: 12px 0 12px 6px;
+    padding: 12px 10px;
+    gap: 10px;
+  }
+
+  .lesson-icon {
+    width: 34px;
+    height: 34px;
+    flex: 0 0 34px;
+  }
+
+  .section-heading,
+  .subject-top,
+  .subject-result,
+  .profile-actions,
+  .announcement-card,
+  .manage-announcement-item,
+  .form-buttons,
+  .teacher-form-actions,
+  .announcement-form-actions,
+  .cm-form-actions,
+  .reports-header-actions {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .profile-top {
+    gap: 14px;
+    padding-bottom: 20px;
+  }
+
+  .profile-photo {
+    width: 112px;
+    height: 112px;
+  }
+
+  .profile-actions button,
+  .form-buttons button,
+  .teacher-form-actions button,
+  .announcement-form-actions button,
+  .reports-header-actions button {
+    width: 100%;
+  }
+
+  .manage-schedule-lesson,
+  .schedule-selection,
+  .academics-score-main,
+  .academics-assessment-row,
+  .announcement-form-grid,
+  .teacher-form-grid,
+  .form-grid,
+  .cm-form-grid,
+  .cm-stats,
+  .cm-info-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .academics-score-main label:first-child,
+  .academics-assessment-row label:first-child {
+    grid-column: auto;
+  }
+
+  .academics-remove,
+  .academics-secondary,
+  .academics-primary,
+  .schedule-save-button {
+    width: 100%;
+  }
+
+  .academics-remove {
+    justify-self: stretch;
+  }
+}
