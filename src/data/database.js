@@ -68,13 +68,56 @@ function shouldInitializeStorage(currentValue, defaultValue) {
   return false;
 }
 
+function sanitizeDemoStudents(value) {
+  if (!Array.isArray(value)) {
+    return [];
+  }
+
+  return value.filter((student) => {
+    const studentId = String(student?.id ?? "").trim();
+    return !(
+      studentId.toUpperCase() === "HUMS9001" ||
+      studentId.toUpperCase() === "HUMS1001" ||
+      studentId.toUpperCase().startsWith("HUMS-2025-") ||
+      studentId.toUpperCase().startsWith("HUMS_2025_") ||
+      studentId.toUpperCase().startsWith("HUMS2025-")
+    );
+  });
+}
+
 export function initializeDatabase() {
   if (typeof window === "undefined") {
     return;
   }
 
+  const storedStudents = localStorage.getItem("humsStudents");
+  if (storedStudents !== null) {
+    try {
+      const parsed = JSON.parse(storedStudents);
+      if (Array.isArray(parsed)) {
+        const sanitized = sanitizeDemoStudents(parsed);
+        if (sanitized.length !== parsed.length) {
+          localStorage.setItem("humsStudents", JSON.stringify(sanitized));
+        }
+      }
+    } catch {
+      localStorage.removeItem("humsStudents");
+    }
+  }
+
+  if (localStorage.getItem("humsStudent") !== null) {
+    localStorage.removeItem("humsStudent");
+  }
+
   Object.entries(DATABASE_DEFAULTS).forEach(([key, value]) => {
     const currentValue = localStorage.getItem(key);
+
+    if (key === "humsStudents") {
+      if (currentValue === null) {
+        localStorage.setItem(key, JSON.stringify(value));
+      }
+      return;
+    }
 
     if (shouldInitializeStorage(currentValue, value)) {
       localStorage.setItem(key, JSON.stringify(value));
